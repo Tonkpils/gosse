@@ -14,7 +14,7 @@ type GooSSE struct {
 }
 
 func (sse *GooSSE) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	flusher, ok := w.(http.Flusher)
+	f, ok := w.(http.Flusher)
 	if !ok {
 		http.Error(w, "Stream is not supported", http.StatusInternalServerError)
 		return
@@ -32,17 +32,16 @@ func (sse *GooSSE) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		log.Println("Client disconnected.")
 	}()
 
-	go sse.ping(w, flusher)
+	go sse.ping(w, f)
 
 	// Send retry interval
 	fmt.Fprintf(w, "retry: 1000\n")
-	flusher.Flush()
+	f.Flush()
 
 	// Await for messages
 	for {
-		msg := <-msgChan
-		fmt.Fprintf(w, "data: %s\n\n", msg)
-		flusher.Flush()
+		fmt.Fprintf(w, "data: %s\n\n", <-msgChan)
+		f.Flush()
 	}
 
 	log.Println("Finished SSE request")
