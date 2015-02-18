@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Go SSE</title>
+  </head>
+  <body>
+    <h1>Go SSE</h1>
+
+    <div id="time">
+    </div>
+
+    <script type="text/javascript">
+    var source = new EventSource('/events');
+    source.onmessage = function(e) {
+      var timeDiv = document.getElementById('time');
+      var data = JSON.parse(e.data)
+      timeDiv.innerHTML = '<p>' + data.time + '</p>';
+    };
+
+    source.onerror = function(e) {
+      console.log(e);
+    };
+    </script>
+  </body>
+</html>
