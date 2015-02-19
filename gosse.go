@@ -8,12 +8,12 @@ import (
 	"time"
 )
 
-type GooSSE struct {
+type GoSSE struct {
 	clients  map[chan string]bool
 	messages chan string
 }
 
-func (sse *GooSSE) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+func (sse *GoSSE) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	f, ok := w.(http.Flusher)
 	if !ok {
 		http.Error(w, "Stream is not supported", http.StatusInternalServerError)
@@ -47,7 +47,7 @@ func (sse *GooSSE) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	log.Println("Finished SSE request")
 }
 
-func (sse *GooSSE) ping(w http.ResponseWriter, f http.Flusher) {
+func (sse *GoSSE) ping(w http.ResponseWriter, f http.Flusher) {
 	for {
 		fmt.Fprintf(w, ":\n\n")
 		f.Flush()
@@ -55,7 +55,7 @@ func (sse *GooSSE) ping(w http.ResponseWriter, f http.Flusher) {
 	}
 }
 
-func (sse *GooSSE) Listen() {
+func (sse *GoSSE) Listen() {
 	go func() {
 		for {
 			select {
@@ -79,23 +79,23 @@ func HomePage(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	goosse := &GooSSE{
+	gosse := &GoSSE{
 		clients:  make(map[chan string]bool),
 		messages: make(chan string),
 	}
 
-	goosse.Listen()
+	gosse.Listen()
 
 	// Goroutine to generate events
 	go func() {
 		for {
-			goosse.messages <- fmt.Sprintf(`{"time": %q}`, time.Now())
+			gosse.messages <- fmt.Sprintf(`{"time": %q}`, time.Now())
 			time.Sleep(30 * time.Second)
 		}
 	}()
 
 	http.Handle("/", http.HandlerFunc(HomePage))
-	http.Handle("/events", goosse)
+	http.Handle("/events", gosse)
 
 	http.ListenAndServe(":3000", nil)
 }

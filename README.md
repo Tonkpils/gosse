@@ -7,7 +7,7 @@ Go Server Sent Events Example
 Clone the repository
 
 ```
-$ git clone git@github.com:Tonkpils/goosse.git
+$ git clone git@github.com:Tonkpils/gosse.git
 ```
 
 ### Docker
@@ -15,8 +15,8 @@ $ git clone git@github.com:Tonkpils/goosse.git
 To run with Docker simply use:
 
 ```
-$ docker build -t "goosse"
-$ docker run -p 3000:3000 goosse
+$ docker build -t "gosse"
+$ docker run -p 3000:3000 gosse
 ```
 
 Then visit your browser at
@@ -28,7 +28,7 @@ http://<DOCKER_IP>:3000/
 ### Go
 
 ```
-$ go run goosse.go
+$ go run gosse.go
 ```
 
 Then visit your browser at
