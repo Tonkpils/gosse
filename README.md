@@ -1,4 +1,4 @@
-# GooSSE
+# GoSSE (/ɡo͞os/)
 
 Go Server Sent Events Example
 
