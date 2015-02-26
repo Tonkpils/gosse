@@ -21,6 +21,7 @@ func (sse *GoSSE) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/event-stream")
+	w.Header().Set("X-Accel-Buffering", "no")
 
 	msgChan := make(chan string)
 	sse.clients[msgChan] = true
