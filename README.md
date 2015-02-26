@@ -16,13 +16,13 @@ To run with Docker simply use:
 
 ```
 $ docker build -t "gosse"
-$ docker run -p 3000:3000 gosse
+$ docker run -p 8080:8080 gosse
 ```
 
 Then visit your browser at
 
 ```
-http://<DOCKER_IP>:3000/
+http://<DOCKER_IP>:8080/
 ```
 
 ### Go
@@ -34,7 +34,7 @@ $ go run gosse.go
 Then visit your browser at
 
 ```
-http://localhost:3000/
+http://localhost:8080/
 ```
 
 ## EventSource
