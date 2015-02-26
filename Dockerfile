@@ -9,5 +9,7 @@ ADD . $APP_DIR
 
 RUN go install
 
+EXPOSE 8080
+
 CMD exec gosse
 
