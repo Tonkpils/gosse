@@ -98,5 +98,5 @@ func main() {
 	http.Handle("/", http.HandlerFunc(HomePage))
 	http.Handle("/events", gosse)
 
-	http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":8080", nil)
 }
